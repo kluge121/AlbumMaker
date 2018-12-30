@@ -48,6 +48,14 @@ class TypeFragment : TypeBaseFragment(), View.OnClickListener {
     override fun onClick(view: View?) {
 
         if (view is ImageView) {
+            imageCallback = object : IimageSetCallback {
+                override fun setImage(uri: String) {
+
+
+
+                }
+            }
+
             selectGallery()
         }
     }

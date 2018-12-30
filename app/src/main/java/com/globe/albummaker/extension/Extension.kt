@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import com.globe.albummaker.view.album.fragment.AlbumEditFragment
 import com.globe.testproject.data.realm.RealmAlbum
 import com.globe.testproject.data.realm.RealmAlbumPageData
 import io.realm.Realm
@@ -23,6 +24,15 @@ fun AppCompatActivity.addFragment(fragment: Fragment, frameId: Int) {
 
 fun AppCompatActivity.replaceFragment(fragment: Fragment, frameId: Int) {
     supportFragmentManager.inTransaction { replace(frameId, fragment) }
+}
+
+fun AlbumEditFragment.addFragment(fragment: Fragment, frameId: Int) {
+    childFragmentManager.inTransaction { add(frameId, fragment) }
+}
+
+
+fun AlbumEditFragment.replaceFragment(fragment: Fragment, frameId: Int) {
+    childFragmentManager.inTransaction { replace(frameId, fragment) }
 }
 
 
