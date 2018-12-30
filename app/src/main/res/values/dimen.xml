@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="album_side_number_space">11dp</dimen>
+    <dimen name="album_number_space">17dp</dimen>
+
+
+    <dimen name="album_template_side_space">15dp</dimen>
+    <dimen name="album_template_top_space">5dp</dimen>
+    <dimen name="album_template_between_space">7dp</dimen>
+
+    <dimen name="album_between_space">25dp</dimen>
+    <dimen name="album_first_item_top_space">10dp</dimen>
+    <dimen name="snack_bar_height">55dp</dimen>
+</resources>

@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">AlbumMaker</string>
+    <string name="album_create">앨범 만들기</string>
+    <string name="tmp_save">임시저장</string>
+
+    <string name="law1">∙ 상품 및 배송정보를 확인하였으며, 주문에 동의합니다.\n∙ 결제 후에는 배송정보를 변경할 수 없습니다.\n∙ 주문취소는 결제 후 1시간 이내에만 가능합니다.\n∙ 주문제작 상품은 반품 및 교환이 불가합니다.</string>
+    <string name="law2">∙ 동의하지 않으셔도 서비스 이용에는 문제가 없으나\n &#160;동의하시면 회원님 여행기가 서비스 메인에 노출될 수 있고\n &#160;서비스를 홍보하는데 많은 도움이 됩니다.</string>
+    <string name="account_number_info">계좌번호 : KB국민 991502-01-156837 김태경</string>
+</resources>

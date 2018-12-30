@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="30dp">
+
+    <ImageView
+        android:id="@+id/recyclerview_album_item_delete_btn"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginBottom="5dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_x"
+        app:layout_constraintBottom_toBottomOf="@+id/recyclerview_album_item_title"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/recyclerview_album_item_guide1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.49" />
+
+
+    <ImageView
+        android:id="@+id/recyclerview_album_item_image"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/album_sample_image"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="@id/recyclerview_album_item_guide1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/recyclerview_album_item_title"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="19dp"
+        android:letterSpacing="-0.02"
+        android:lines="1"
+        android:singleLine="true"
+        android:text="가족들과의 소중한 추억"
+        android:textColor="#000000"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/recyclerview_album_item_guide1"
+        app:layout_constraintTop_toTopOf="@+id/recyclerview_album_item_image" />
+
+    <TextView
+        android:id="@+id/recyclerview_album_item_sub_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:letterSpacing="-0.02"
+        android:minWidth="100dp"
+        android:text="세로 21x30cm"
+        android:textColor="#000000"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/recyclerview_album_item_title"
+        app:layout_constraintTop_toBottomOf="@id/recyclerview_album_item_title" />
+
+    <TextView
+        android:id="@+id/recyclerview_album_item_contents"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+
+        android:letterSpacing="-0.02"
+        android:minWidth="140dp"
+        android:text="하드커버 8 페이지"
+        android:textColor="#000000"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="@id/recyclerview_album_item_sub_title"
+        app:layout_constraintTop_toBottomOf="@id/recyclerview_album_item_sub_title" />
+
+    <TextView
+        android:id="@+id/recyclerview_album_item_contents2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:letterSpacing="-0.02"
+        android:minWidth="140dp"
+        android:text="하드커버 8 페이지"
+        android:textColor="#000000"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="@id/recyclerview_album_item_sub_title"
+        app:layout_constraintTop_toBottomOf="@id/recyclerview_album_item_contents" />
+
+
+    <ImageButton
+        android:id="@+id/recyclerview_album_item_minus_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="19dp"
+        android:background="@null"
+        android:src="@drawable/item_minus_icon"
+        app:layout_constraintStart_toStartOf="@id/recyclerview_album_item_title"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerview_album_item_contents2" />
+
+    <TextView
+        android:id="@+id/recyclerview_album_item_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:letterSpacing="-0.02"
+        android:minWidth="10dp"
+        android:text="1"
+        android:textColor="#000000"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/recyclerview_album_item_minus_btn"
+        app:layout_constraintEnd_toEndOf="@id/recyclerview_album_item_plus_btn"
+        app:layout_constraintStart_toStartOf="@id/recyclerview_album_item_minus_btn"
+        app:layout_constraintTop_toTopOf="@+id/recyclerview_album_item_minus_btn"
+        app:layout_constraintVertical_bias="0.5" />
+
+
+    <ImageButton
+        android:id="@+id/recyclerview_album_item_plus_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="19dp"
+        android:background="@null"
+        android:src="@drawable/item_plus_icon"
+        app:layout_constraintEnd_toEndOf="@id/recyclerview_album_item_contents"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerview_album_item_contents2" />
+
+    <TextView
+        android:id="@+id/recyclerview_album_item_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
+        android:gravity="end"
+        android:letterSpacing="-0.02"
+        android:minWidth="50dp"
+        android:text="10,800"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/recyclerview_album_item_image"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/recyclerview_album_item_won"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="원"
+        android:textColor="@color/black"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        app:layout_constraintBaseline_toBaselineOf="@+id/recyclerview_album_item_price"
+        app:layout_constraintBottom_toBottomOf="@+id/recyclerview_album_item_price"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintStart_toEndOf="@+id/recyclerview_album_item_price" />
+
+    z
+</androidx.constraintlayout.widget.ConstraintLayout>

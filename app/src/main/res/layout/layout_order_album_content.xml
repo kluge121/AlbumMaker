@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/albumOrderNestedScrollView"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/albumOrderGuide2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.922" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/albumOrderGuide3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.056" />
+
+        <TextView
+            android:id="@+id/album_order_tv4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:text="주문상품"
+            android:textColor="#000000"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/albumOrderGuide3" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/albumOrderRecyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/album_order_tv4" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintTop_toBottomOf="@+id/albumOrderRecyclerview">
+
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/albumOrderGuide4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.922" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/albumOrderGuide5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.056" />
+
+
+            <TextView
+                android:id="@+id/albumOrderTv5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="결제예정금액"
+                android:textColor="#000000"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@id/albumOrderGuide5" />
+
+            <TextView
+                android:id="@+id/albumOrderTv6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="상품금액"
+                android:textColor="#000000"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@id/albumOrderGuide5"
+                app:layout_constraintTop_toBottomOf="@+id/albumOrderTv5" />
+
+            <TextView
+                android:id="@+id/albumOrderPrice1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="14,900원"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/albumOrderGuide4"
+                app:layout_constraintTop_toTopOf="@+id/albumOrderTv6" />
+
+            <TextView
+                android:id="@+id/albumOrderTv7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="할인금액"
+                android:textColor="#000000"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@id/albumOrderGuide5"
+                app:layout_constraintTop_toBottomOf="@+id/albumOrderTv6" />
+
+            <TextView
+                android:id="@+id/albumOrderPrice2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="14,900원"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/albumOrderGuide4"
+                app:layout_constraintTop_toTopOf="@+id/albumOrderTv7" />
+
+            <TextView
+                android:id="@+id/albumOrderTv8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="배송비"
+                android:textColor="#000000"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@id/albumOrderGuide5"
+                app:layout_constraintTop_toBottomOf="@+id/albumOrderTv7" />
+
+            <TextView
+                android:id="@+id/albumOrderPrice3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="14,900원"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/albumOrderGuide4"
+                app:layout_constraintTop_toTopOf="@+id/albumOrderTv8" />
+
+            <ImageView
+                android:id="@+id/albumOrderView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:src="@drawable/order_line"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/albumOrderTv8" />
+
+
+            <TextView
+                android:id="@+id/albumOrderTv9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="17dp"
+                android:text="최종결제금"
+                android:textColor="@color/black"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@id/albumOrderGuide5"
+                app:layout_constraintTop_toBottomOf="@+id/albumOrderView1" />
+
+            <TextView
+                android:id="@+id/albumOrderPrice4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:letterSpacing="-0.02"
+                android:text="16,000원"
+                android:textColor="#fc7665"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/albumOrderTv9"
+                app:layout_constraintEnd_toEndOf="@id/albumOrderGuide4"
+                app:layout_constraintTop_toTopOf="@+id/albumOrderTv9"
+                app:layout_constraintVertical_bias="0.5" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.core.widget.NestedScrollView>
