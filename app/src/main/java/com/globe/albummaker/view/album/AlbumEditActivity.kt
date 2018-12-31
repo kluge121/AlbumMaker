@@ -78,10 +78,10 @@ class AlbumEditActivity : StatusTransparentActivity() {
         albumEditRecyclerview.adapter = recyclerViewAdapter
         albumEditRecyclerview.layoutManager = LinearLayoutManager(this, LinearLayout.HORIZONTAL, false)
         albumEditRecyclerview.addItemDecoration(
-            AlbumNumberItemDecoration(
-                this,
-                R.dimen.album_side_number_space
-            )
+                AlbumNumberItemDecoration(
+                        this,
+                        R.dimen.album_side_number_space
+                )
         )
         (albumEditRecyclerview.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
         realm.close()

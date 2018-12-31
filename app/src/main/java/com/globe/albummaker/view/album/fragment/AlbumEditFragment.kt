@@ -25,7 +25,7 @@ class AlbumEditFragment : Fragment(), IAlbumEditFragment {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_edit_contents, container, false)
-        initWidget()
+//        initWidget()
         return view
     }
 
@@ -40,7 +40,7 @@ class AlbumEditFragment : Fragment(), IAlbumEditFragment {
     }
 
     private fun initSingleSideWidget() {
-        viewSigleMode()
+        viewSingleMode()
 
         val leftFragment = TypeFragment.newInstance(0)
         val rightFragment = TypeFragment.newInstance(0)
@@ -56,29 +56,23 @@ class AlbumEditFragment : Fragment(), IAlbumEditFragment {
         replaceFragment(doubleSideFragment, R.id.albumEditFragmentContainer3)
     }
 
-
-    private fun viewSigleMode() {
-        with(view) {
-            albumEditFragmentReset1.visibility = View.VISIBLE
-            albumEditFragmentReset2.visibility = View.VISIBLE
-            albumEditFragmentReset3.visibility = View.INVISIBLE
-            albumEditFragmentContainer1.visibility = View.VISIBLE
-            albumEditFragmentContainer2.visibility = View.VISIBLE
-            albumEditFragmentContainer3.visibility = View.INVISIBLE
-        }
+    private fun viewSingleMode() {
+        albumEditFragmentReset1.visibility = View.VISIBLE
+        albumEditFragmentReset2.visibility = View.VISIBLE
+        albumEditFragmentReset3.visibility = View.INVISIBLE
+        albumEditFragmentContainer1.visibility = View.VISIBLE
+        albumEditFragmentContainer2.visibility = View.VISIBLE
+        albumEditFragmentContainer3.visibility = View.INVISIBLE
     }
 
     private fun viewDoubleMode() {
-        with(view) {
-            albumEditFragmentReset1.visibility = View.INVISIBLE
-            albumEditFragmentReset2.visibility = View.INVISIBLE
-            albumEditFragmentReset3.visibility = View.VISIBLE
-            albumEditFragmentContainer1.visibility = View.INVISIBLE
-            albumEditFragmentContainer2.visibility = View.INVISIBLE
-            albumEditFragmentContainer3.visibility = View.VISIBLE
-        }
+        albumEditFragmentReset1.visibility = View.INVISIBLE
+        albumEditFragmentReset2.visibility = View.INVISIBLE
+        albumEditFragmentReset3.visibility = View.VISIBLE
+        albumEditFragmentContainer1.visibility = View.INVISIBLE
+        albumEditFragmentContainer2.visibility = View.INVISIBLE
+        albumEditFragmentContainer3.visibility = View.VISIBLE
     }
-
 
     companion object {
         fun newInstance(pageInfo: RealmAlbumPageData): AlbumEditFragment {
