@@ -5,12 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import com.globe.testproject.constants.albumType
+import com.globe.albummaker.constants.albumType
+import com.globe.albummaker.util.GlideApp
+import java.io.File
 
 
 class TypeFragment : TypeBaseFragment(), View.OnClickListener {
 
-    var mType = -1;
+    var mType = -1
+    var position = 0
+    lateinit var photoList: Array<String>
+    var imageViewCount = 0
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,19 +25,22 @@ class TypeFragment : TypeBaseFragment(), View.OnClickListener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(albumType[mType], container, false)
-        findAllImageView()
+        findAllImageViewAndInitArray()
         return view
     }
 
 
-    private fun findAllImageView() {
+    private fun findAllImageViewAndInitArray() {
         val viewGroup = (view as ViewGroup)
         val childCount = viewGroup.childCount
+        imageViewCount = childCount
         for (i in 0..childCount) {
             val view = viewGroup.getChildAt(i)
             if (view is ImageView)
                 view.setOnClickListener(this)
         }
+
+        photoList = Array(childCount) { "" }
     }
 
 
@@ -51,6 +60,20 @@ class TypeFragment : TypeBaseFragment(), View.OnClickListener {
             imageCallback = object : IimageSetCallback {
                 override fun setImage(uri: String) {
 
+                    val parentView = getView() as ViewGroup
+                    val childCount = parentView.childCount
+                    for (i in 0..childCount) {
+                        if (view.id == parentView.getChildAt(i).id) {
+                            GlideApp.with(context!!)
+                                .load(File(uri))
+                                .into(view)
+
+                            //어댑터에서 타입, 뷰 싱크 액티비티 계층에
+                            //프리뷰 업데이트
+
+
+                        }
+                    }
 
 
                 }

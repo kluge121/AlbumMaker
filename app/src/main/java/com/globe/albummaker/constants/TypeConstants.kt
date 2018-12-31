@@ -1,2 +1,2 @@
-package com.globe.testproject.constants
+package com.globe.albummaker.constants
 

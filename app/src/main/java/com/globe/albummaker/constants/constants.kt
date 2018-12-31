@@ -1,4 +1,4 @@
-package com.globe.testproject.constants
+package com.globe.albummaker.constants
 
 import com.globe.albummaker.R
 
@@ -6,6 +6,9 @@ import com.globe.albummaker.R
 const val NEW_ALBUM = -100
 const val STORED_ALBUM = -200
 const val TEMPLATE_SELECT = 523
+
+const val LEFT_PAGE = 123
+const val RIGHT_PAGE = 456
 
 
 val album8BasePrice = arrayOf(20315, 25415, 23715, 28815)

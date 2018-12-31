@@ -12,7 +12,7 @@ import com.globe.albummaker.view.album.adapter.AlbumTemplateDualItemDecoration
 import com.globe.albummaker.view.album.adapter.AlbumTemplateSingleItemDecoration
 import com.globe.albummaker.view.album.adapter.TemplateSelectAdapter
 import com.globe.albummaker.view.base.StatusTransparentActivity
-import com.globe.testproject.constants.TEMPLATE_SELECT
+import com.globe.albummaker.constants.TEMPLATE_SELECT
 import kotlinx.android.synthetic.main.activity_album_template_select.*
 
 

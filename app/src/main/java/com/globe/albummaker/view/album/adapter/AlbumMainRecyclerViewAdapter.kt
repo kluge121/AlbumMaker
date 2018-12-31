@@ -10,8 +10,8 @@ import android.view.ViewGroup
 import androidx.annotation.DimenRes
 import androidx.recyclerview.widget.RecyclerView
 import com.globe.albummaker.R
-import com.globe.testproject.constants.*
-import com.globe.testproject.data.realm.RealmAlbum
+import com.globe.albummaker.constants.*
+import com.globe.albummaker.data.realm.RealmAlbum
 import io.realm.Realm
 import io.realm.RealmList
 import kotlinx.android.synthetic.main.recyclerview_album_item.view.*

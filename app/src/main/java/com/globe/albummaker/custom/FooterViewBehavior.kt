@@ -1,4 +1,4 @@
-package com.globe.testproject.custom
+package com.globe.albummaker.custom
 
 import android.animation.Animator
 import android.content.Context

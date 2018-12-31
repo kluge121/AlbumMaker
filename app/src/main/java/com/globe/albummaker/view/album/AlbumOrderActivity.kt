@@ -1,6 +1,5 @@
 package com.globe.albummaker.view.album
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -8,11 +7,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.globe.albummaker.R
 import com.globe.albummaker.view.album.adapter.AlbumOrderListAdapter
 import com.globe.albummaker.view.base.StatusTransparentActivity
-import com.globe.testproject.data.realm.RealmAlbum
+import com.globe.albummaker.data.realm.RealmAlbum
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_album_order.*
 import kotlinx.android.synthetic.main.layout_order_album_content.*
-import layout.CustomSnackbar
+import com.globe.albummaker.custom.CustomSnackbar
 import java.text.DecimalFormat
 
 class AlbumOrderActivity : StatusTransparentActivity() {
@@ -64,11 +63,11 @@ class AlbumOrderActivity : StatusTransparentActivity() {
         if (!snackBar!!.isShown) {
             snackBar!!.setAction("", View.OnClickListener {
 
-                Intent(this@AlbumOrderActivity, AlbumOrderAddressActivity::class.java).apply {
-                    putExtra("price1", amountPrice)
-                    putExtra("price2", disCountPrice)
-                    startActivity(this)
-                }
+//                Intent(this@AlbumOrderActivity, AlbumOrderAddressActivity::class.java).apply {
+//                    putExtra("price1", amountPrice)
+//                    putExtra("price2", disCountPrice)
+//                    startActivity(this)
+//                }
             })
 
             snackBar!!.show()

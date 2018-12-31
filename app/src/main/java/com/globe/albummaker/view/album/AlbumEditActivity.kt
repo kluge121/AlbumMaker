@@ -1,17 +1,23 @@
 package com.globe.albummaker.view.album
 
 import android.os.Bundle
+import android.widget.LinearLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.SimpleItemAnimator
 import com.globe.albummaker.R
 import com.globe.albummaker.view.album.adapter.AlbumEditViewPagerAdapter
 import com.globe.albummaker.view.album.fragment.AlbumEditFragment
 import com.globe.albummaker.view.base.StatusTransparentActivity
-import com.globe.testproject.constants.NEW_ALBUM
-import com.globe.testproject.constants.STORED_ALBUM
-import com.globe.testproject.data.realm.RealmAlbum
-import com.globe.testproject.data.realm.RealmAlbumPageData
-import com.globe.testproject.extension.getAlbumNextKey
-import com.globe.testproject.extension.getAlbumPageNextKey
+import com.globe.albummaker.constants.NEW_ALBUM
+import com.globe.albummaker.constants.STORED_ALBUM
+import com.globe.albummaker.data.realm.RealmAlbum
+import com.globe.albummaker.data.realm.RealmAlbumPageData
+import com.globe.albummaker.extension.getAlbumNextKey
+import com.globe.albummaker.extension.getAlbumPageNextKey
+import com.globe.albummaker.view.album.adapter.AlbumEditContentRecyclerViewAdapter
+import com.globe.albummaker.view.album.adapter.AlbumNumberItemDecoration
 import io.realm.Realm
+import kotlinx.android.synthetic.main.activity_album_edit.*
 
 class AlbumEditActivity : StatusTransparentActivity() {
 
@@ -20,13 +26,14 @@ class AlbumEditActivity : StatusTransparentActivity() {
 
     var mAlbum: RealmAlbum? = null
     lateinit var viewPagerAdapter: AlbumEditViewPagerAdapter
+    lateinit var recyclerViewAdapter: AlbumEditContentRecyclerViewAdapter
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_album_edit)
         setStatusTransparent()
         viewPagerAdapter = AlbumEditViewPagerAdapter(supportFragmentManager)
-
 
         initWidget(NEW_ALBUM)
     }
@@ -43,6 +50,7 @@ class AlbumEditActivity : StatusTransparentActivity() {
     }
 
     private fun initNewAlbum() {
+
         val realm = Realm.getDefaultInstance()
         mAlbum = RealmAlbum()
         mAlbum!!.id = getAlbumNextKey(realm)
@@ -62,7 +70,21 @@ class AlbumEditActivity : StatusTransparentActivity() {
             mAlbum!!.pageDatas.add(pageData)
             viewPagerAdapter.addFragmentPage(AlbumEditFragment.newInstance(pageData))
         }
+        recyclerViewAdapter = AlbumEditContentRecyclerViewAdapter(mAlbum!!)
+        album_edit_viewpager.adapter = viewPagerAdapter
+        viewPagerAdapter.notifyDataSetChanged()
 
+
+        albumEditRecyclerview.adapter = recyclerViewAdapter
+        albumEditRecyclerview.layoutManager = LinearLayoutManager(this, LinearLayout.HORIZONTAL, false)
+        albumEditRecyclerview.addItemDecoration(
+            AlbumNumberItemDecoration(
+                this,
+                R.dimen.album_side_number_space
+            )
+        )
+        (albumEditRecyclerview.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
+        realm.close()
     }
 
     private fun initStoredAlbum() {

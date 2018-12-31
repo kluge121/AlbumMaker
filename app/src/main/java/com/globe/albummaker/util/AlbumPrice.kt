@@ -1,8 +1,8 @@
-package com.globe.testproject.util
+package com.globe.albummaker.util
 
 import com.globe.albummaker.data.local.SelectOptionData
-import com.globe.testproject.constants.albumSquareBasePrice
-import com.globe.testproject.constants.pagePriceOption
+import com.globe.albummaker.constants.albumSquareBasePrice
+import com.globe.albummaker.constants.pagePriceOption
 
 
 class AlbumPrice {

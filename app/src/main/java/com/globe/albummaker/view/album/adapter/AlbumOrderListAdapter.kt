@@ -7,11 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.globe.albummaker.R
-import com.globe.testproject.constants.coverCoatingOption
-import com.globe.testproject.constants.coverOption
-import com.globe.testproject.constants.innerOption
-import com.globe.testproject.constants.sizeOption
-import com.globe.testproject.data.realm.RealmAlbum
+import com.globe.albummaker.constants.coverCoatingOption
+import com.globe.albummaker.constants.coverOption
+import com.globe.albummaker.constants.innerOption
+import com.globe.albummaker.constants.sizeOption
+import com.globe.albummaker.data.realm.RealmAlbum
 import kotlinx.android.synthetic.main.recyclerview_album_order_item.view.*
 import java.text.DecimalFormat
 

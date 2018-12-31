@@ -1,15 +1,14 @@
-package com.globe.testproject.extension
+package com.globe.albummaker.extension
 
 
 import android.os.SystemClock
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.globe.albummaker.view.album.fragment.AlbumEditFragment
-import com.globe.testproject.data.realm.RealmAlbum
-import com.globe.testproject.data.realm.RealmAlbumPageData
+import com.globe.albummaker.data.realm.RealmAlbum
+import com.globe.albummaker.data.realm.RealmAlbumPageData
 import io.realm.Realm
 
 

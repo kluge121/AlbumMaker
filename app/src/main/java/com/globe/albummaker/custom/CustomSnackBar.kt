@@ -1,4 +1,4 @@
-package layout
+package com.globe.albummaker.custom
 
 import android.view.LayoutInflater
 import android.view.View

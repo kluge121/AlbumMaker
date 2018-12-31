@@ -1,11 +1,10 @@
-package com.globe.testproject.data.realm
+package com.globe.albummaker.data.realm
 
 import android.os.Parcel
 import android.os.Parcelable
 import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.Ignore
-import io.realm.annotations.LinkingObjects
 import io.realm.annotations.PrimaryKey
 
 open class RealmAlbum() : RealmObject(), Parcelable {
@@ -40,7 +39,7 @@ open class RealmAlbum() : RealmObject(), Parcelable {
         coverType = parcel.readInt()
         innerType = parcel.readInt()
         coverCoating = parcel.readInt()
-        pageDatas.addAll(parcel.createTypedArrayList(RealmAlbumPageData.CREATOR))
+        pageDatas.addAll(parcel.createTypedArrayList(RealmAlbumPageData))
         tmpPrice = parcel.readInt()
     }
 

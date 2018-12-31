@@ -13,7 +13,8 @@ class AlbumEditViewPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter
 
 
     fun addFragmentPage(pageFragment: AlbumEditFragment) {
-        list.add((list.size) - 1, pageFragment)
+        if (list.size > 0)
+            list.add((list.size) - 1, pageFragment)
     }
 
 

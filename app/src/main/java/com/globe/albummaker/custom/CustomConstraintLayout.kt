@@ -1,4 +1,4 @@
-package com.globe.testproject.custom
+package com.globe.albummaker.custom
 
 import android.content.Context
 import android.util.AttributeSet

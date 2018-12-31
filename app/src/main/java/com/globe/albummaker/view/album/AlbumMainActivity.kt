@@ -12,14 +12,14 @@ import com.globe.albummaker.R
 import com.globe.albummaker.view.album.adapter.AlbumItemDecoration
 import com.globe.albummaker.view.album.adapter.AlbumMainRecyclerViewAdapter
 import com.globe.albummaker.view.base.StatusTransparentActivity
-import com.globe.testproject.data.realm.RealmAlbum
+import com.globe.albummaker.data.realm.RealmAlbum
 import com.google.android.material.snackbar.Snackbar
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import io.realm.Realm
 import io.realm.RealmList
 import kotlinx.android.synthetic.main.activity_album_main.*
-import layout.CustomSnackbar
+import com.globe.albummaker.custom.CustomSnackbar
 import java.text.DecimalFormat
 
 

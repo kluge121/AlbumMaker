@@ -8,7 +8,7 @@ import com.globe.albummaker.R
 import com.globe.albummaker.view.base.StatusTransparentActivity
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_album_title.*
-import layout.CustomSnackbar
+import com.globe.albummaker.custom.CustomSnackbar
 
 class AlbumTitleActivity : StatusTransparentActivity() {
 

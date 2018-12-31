@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.globe.albummaker.R
 import com.globe.albummaker.view.album.fragment.album_type.TypeFragment
-import com.globe.testproject.data.realm.RealmAlbumPageData
-import com.globe.testproject.extension.replaceFragment
+import com.globe.albummaker.data.realm.RealmAlbumPageData
+import com.globe.albummaker.extension.replaceFragment
 import kotlinx.android.synthetic.main.fragment_edit_contents.*
 
 
@@ -42,8 +42,8 @@ class AlbumEditFragment : Fragment(), IAlbumEditFragment {
     private fun initSingleSideWidget() {
         viewSigleMode()
 
-        val leftFragment = TypeFragment.newInstance(mPageInfo.frameType1)
-        val rightFragment = TypeFragment.newInstance(mPageInfo.frameType2)
+        val leftFragment = TypeFragment.newInstance(0)
+        val rightFragment = TypeFragment.newInstance(0)
 
         replaceFragment(leftFragment, R.id.albumEditFragmentContainer1)
         replaceFragment(rightFragment, R.id.albumEditFragmentContainer2)
