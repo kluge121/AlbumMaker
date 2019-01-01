@@ -25,10 +25,13 @@ class TypeFragment : TypeBaseFragment(), View.OnClickListener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(albumType[mType], container, false)
-        findAllImageViewAndInitArray()
         return view
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        findAllImageViewAndInitArray()
+    }
 
     private fun findAllImageViewAndInitArray() {
         val viewGroup = (view as ViewGroup)
@@ -74,11 +77,8 @@ class TypeFragment : TypeBaseFragment(), View.OnClickListener {
 
                         }
                     }
-
-
                 }
             }
-
             selectGallery()
         }
     }

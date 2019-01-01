@@ -25,10 +25,13 @@ class AlbumEditFragment : Fragment(), IAlbumEditFragment {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_edit_contents, container, false)
-//        initWidget()
         return view
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        initWidget()
+    }
 
     private fun initWidget() {
         if (mPageInfo.isSingle)
