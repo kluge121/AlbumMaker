@@ -1,19 +1,22 @@
 package com.globe.albummaker.view.album.fragment.album_type
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import com.globe.albummaker.R
 import com.globe.albummaker.constants.albumType
 import com.globe.albummaker.util.GlideApp
+import com.globe.albummaker.view.album.AlbumTemplateSelectActivity
 import java.io.File
 
 
 class TypeFragment : TypeBaseFragment(), View.OnClickListener {
 
     var mType = -1
-    var position = 0
     lateinit var photoList: Array<String>
     var imageViewCount = 0
 
@@ -34,13 +37,14 @@ class TypeFragment : TypeBaseFragment(), View.OnClickListener {
     }
 
     private fun findAllImageViewAndInitArray() {
-        val viewGroup = (view as ViewGroup)
+        val viewGroup = view!!.findViewById(R.id.templateRoot) as ViewGroup
+
         val childCount = viewGroup.childCount
+        Log.e("뷰갯수", "$childCount 개")
         imageViewCount = childCount
         for (i in 0..childCount) {
-            val view = viewGroup.getChildAt(i)
-            if (view is ImageView)
-                view.setOnClickListener(this)
+            val view = viewGroup.getChildAt(0)
+           view.setOnClickListener(this)
         }
 
         photoList = Array(childCount) { "" }
@@ -58,18 +62,25 @@ class TypeFragment : TypeBaseFragment(), View.OnClickListener {
     }
 
     override fun onClick(view: View?) {
+        Log.e("TAG", "ddd")
+        if (view!!.id == R.id.albumEditFragmentContainer_0) {
+            val intent = Intent(context, AlbumTemplateSelectActivity::class.java)
+            with(intent) {
+                putExtra("isFirstPage", (mType == 1))
+                startActivity(this)
+            }
+        }
 
         if (view is ImageView) {
             imageCallback = object : IimageSetCallback {
                 override fun setImage(uri: String) {
-
                     val parentView = getView() as ViewGroup
                     val childCount = parentView.childCount
                     for (i in 0..childCount) {
                         if (view.id == parentView.getChildAt(i).id) {
                             GlideApp.with(context!!)
-                                .load(File(uri))
-                                .into(view)
+                                    .load(File(uri))
+                                    .into(view)
 
                             //어댑터에서 타입, 뷰 싱크 액티비티 계층에
                             //프리뷰 업데이트

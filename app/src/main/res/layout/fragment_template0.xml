@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/templateRoot"
     android:layout_width="170dp"
     android:layout_height="170dp">
+
     <FrameLayout
-        android:id="@+id/albumEditFragmentContainer1"
+        android:id="@+id/albumEditFragmentContainer_0"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="0.5"
-        android:background="@drawable/plus_photo">
-    </FrameLayout>
-
+        android:background="@drawable/plus_photo" />
 </LinearLayout>

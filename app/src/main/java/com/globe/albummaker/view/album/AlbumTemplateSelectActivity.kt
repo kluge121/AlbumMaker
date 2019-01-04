@@ -17,7 +17,6 @@ import kotlinx.android.synthetic.main.activity_album_template_select.*
 
 
 class AlbumTemplateSelectActivity : StatusTransparentActivity() {
-    private var position: Int? = null
     private var isFirstPage: Boolean? = null
     private var tabFlag: Boolean = true
     private val singleDeco = AlbumTemplateSingleItemDecoration(this)
@@ -29,7 +28,7 @@ class AlbumTemplateSelectActivity : StatusTransparentActivity() {
         setContentView(R.layout.activity_album_template_select)
         setStatusTransparent()
         initWidget()
-        position = intent.getIntExtra("position", -1)
+
         isFirstPage = intent.getBooleanExtra("isFirstPage", false)
     }
 
@@ -59,7 +58,8 @@ class AlbumTemplateSelectActivity : StatusTransparentActivity() {
                 album_template_select_recyclerview.removeItemDecoration(singleDeco)
                 albumTemplateSelectSingleBtn.setTextColor(ContextCompat.getColor(this, R.color.b7b7))
                 albumTemplateSelectDualBtn.setTextColor(ContextCompat.getColor(this, R.color.black))
-                album_template_select_recyclerview.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+                album_template_select_recyclerview.layoutManager =
+                        LinearLayoutManager(this, RecyclerView.VERTICAL, false)
                 album_template_select_recyclerview.addItemDecoration(dualDeco)
                 tabFlag = !tabFlag
                 adapter.setCurrentTab(1)
@@ -74,11 +74,9 @@ class AlbumTemplateSelectActivity : StatusTransparentActivity() {
     fun selectTemplateAndFinish(type: Int) {
         val intent = Intent()
         intent.putExtra("type", type)
-        intent.putExtra("position", position)
         setResult(TEMPLATE_SELECT, intent)
         finish()
     }
-
 
 
 }
