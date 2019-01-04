@@ -13,7 +13,7 @@ import com.globe.albummaker.data.realm.RealmAlbumPageData
 import com.globe.albummaker.util.GlideApp
 import kotlinx.android.synthetic.main.recyclerview_album_nomal_list_item.view.*
 
-class AlbumEditContentRecyclerViewAdapter(var album: RealmAlbum) :
+class AlbumEditContentRecyclerViewAdapter(var album: RealmAlbum, var listener: IAlbumEditContentRecyclerListener) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     lateinit var context: Context
@@ -47,10 +47,9 @@ class AlbumEditContentRecyclerViewAdapter(var album: RealmAlbum) :
             holder.setView(context, list[position]!!, currentSelectItem == position, position)
 
             holder.itemView.setOnClickListener {
-                val tmp = currentSelectItem
-                currentSelectItem = position
-                notifyItemChanged(tmp)
-                notifyItemChanged(currentSelectItem)
+                selectItem(position)
+                listener.syncViewPagerPosition(position)
+
 
                 //뷰페이지 페이지 이동
             }
@@ -68,6 +67,18 @@ class AlbumEditContentRecyclerViewAdapter(var album: RealmAlbum) :
 
     override fun getItemId(position: Int): Long {
         return position.toLong()
+    }
+
+    fun selectItem(position: Int) {
+        val tmp = currentSelectItem
+        currentSelectItem = position
+        notifyItemChanged(tmp)
+        notifyItemChanged(currentSelectItem)
+    }
+
+
+    interface IAlbumEditContentRecyclerListener {
+        fun syncViewPagerPosition(position: Int)
     }
 
 

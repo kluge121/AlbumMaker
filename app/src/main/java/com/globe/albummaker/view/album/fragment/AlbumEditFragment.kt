@@ -14,8 +14,10 @@ import kotlinx.android.synthetic.main.fragment_edit_contents.*
 
 class AlbumEditFragment : Fragment(), IAlbumEditFragment {
 
-    lateinit var mPageInfo: RealmAlbumPageData
 
+    //앨범페이지 공간만 제공
+
+    lateinit var mPageInfo: RealmAlbumPageData
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,8 +47,8 @@ class AlbumEditFragment : Fragment(), IAlbumEditFragment {
     private fun initSingleSideWidget() {
         viewSingleMode()
 
-        val leftFragment = TypeFragment.newInstance(0)
-        val rightFragment = TypeFragment.newInstance(0)
+        val leftFragment = TypeFragment.newInstance(mPageInfo.frameType1)
+        val rightFragment = TypeFragment.newInstance(mPageInfo.frameType2)
 
         replaceFragment(leftFragment, R.id.albumEditFragmentContainer1)
         replaceFragment(rightFragment, R.id.albumEditFragmentContainer2)
