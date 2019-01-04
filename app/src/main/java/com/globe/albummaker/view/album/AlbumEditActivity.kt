@@ -48,23 +48,15 @@ class AlbumEditActivity : StatusTransparentActivity() {
 
         album_edit_viewpager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {
-
             }
 
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-
             }
-
             override fun onPageSelected(position: Int) {
                 albumEditRecyclerview.scrollToPosition(position)
-//                albumEditRecyclerview.smoothScrollToPosition(position)
                 recyclerViewAdapter.selectItem(position);
             }
-
-
         })
-
-
     }
 
     private fun initNewAlbum() {
@@ -93,7 +85,7 @@ class AlbumEditActivity : StatusTransparentActivity() {
             viewPagerAdapter.addFragmentPage(AlbumEditFragment.newInstance(pageData))
         }
         recyclerViewAdapter = AlbumEditContentRecyclerViewAdapter(mAlbum!!,
-            object : AlbumEditContentRecyclerViewAdapter.IAlbumEditContentRecyclerListener{
+            object : AlbumEditContentRecyclerViewAdapter.IAlbumEditContentRecyclerListener {
                 override fun syncViewPagerPosition(position: Int) {
                     album_edit_viewpager.currentItem = position
                 }
@@ -118,11 +110,6 @@ class AlbumEditActivity : StatusTransparentActivity() {
     private fun initStoredAlbum() {
 
     }
-
-
-
-
-
 
 
 }

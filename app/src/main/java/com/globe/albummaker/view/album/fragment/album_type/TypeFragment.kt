@@ -16,9 +16,10 @@ import java.io.File
 
 class TypeFragment : TypeBaseFragment(), View.OnClickListener {
 
-    var mType = -1
+    private lateinit var mView: View
+    private var mType = -1
     lateinit var photoList: Array<String>
-    var imageViewCount = 0
+    private var imageViewCount = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,6 +29,7 @@ class TypeFragment : TypeBaseFragment(), View.OnClickListener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(albumType[mType], container, false)
+        mView = view
         return view
     }
 
@@ -37,20 +39,17 @@ class TypeFragment : TypeBaseFragment(), View.OnClickListener {
     }
 
     private fun findAllImageViewAndInitArray() {
-        val viewGroup = view!!.findViewById(R.id.templateRoot) as ViewGroup
-
+        val viewGroup = mView as ViewGroup
         val childCount = viewGroup.childCount
         Log.e("뷰갯수", "$childCount 개")
         imageViewCount = childCount
         for (i in 0..childCount) {
             val view = viewGroup.getChildAt(0)
-           view.setOnClickListener(this)
+            view.setOnClickListener(this)
         }
 
         photoList = Array(childCount) { "" }
     }
-
-
     companion object {
         fun newInstance(type: Int): TypeFragment {
             val fragment = TypeFragment()
@@ -79,8 +78,8 @@ class TypeFragment : TypeBaseFragment(), View.OnClickListener {
                     for (i in 0..childCount) {
                         if (view.id == parentView.getChildAt(i).id) {
                             GlideApp.with(context!!)
-                                    .load(File(uri))
-                                    .into(view)
+                                .load(File(uri))
+                                .into(view)
 
                             //어댑터에서 타입, 뷰 싱크 액티비티 계층에
                             //프리뷰 업데이트
