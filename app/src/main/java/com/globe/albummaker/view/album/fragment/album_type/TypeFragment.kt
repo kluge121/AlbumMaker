@@ -41,7 +41,6 @@ class TypeFragment : TypeBaseFragment(), View.OnClickListener {
     private fun findAllImageViewAndInitArray() {
         val viewGroup = mView as ViewGroup
         val childCount = viewGroup.childCount
-        Log.e("뷰갯수", "$childCount 개")
         imageViewCount = childCount
         for (i in 0..childCount) {
             val view = viewGroup.getChildAt(0)

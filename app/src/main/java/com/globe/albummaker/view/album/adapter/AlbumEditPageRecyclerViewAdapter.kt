@@ -3,6 +3,7 @@ package com.globe.albummaker.view.album.adapter
 import android.app.AlertDialog
 import android.content.Context
 import android.graphics.Rect
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +17,6 @@ import com.globe.albummaker.extension.getAlbumPageNextKey
 import com.globe.albummaker.util.GlideApp
 import io.realm.Realm
 import kotlinx.android.synthetic.main.recyclerview_album_nomal_list_item.view.*
-import java.util.*
 
 class AlbumEditContentRecyclerViewAdapter(var album: RealmAlbum, var listener: IAlbumEditContentRecyclerListener) :
         RecyclerView.Adapter<RecyclerView.ViewHolder>(), ItemTouchHelperCallback.ItemTouchHelperListener {
@@ -49,17 +49,19 @@ class AlbumEditContentRecyclerViewAdapter(var album: RealmAlbum, var listener: I
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
+        val adapterPosition = holder.adapterPosition
+
         if (holder is AlbumNumberNomalListViewHolder) {
             holder.setView(context, list[position]!!, currentSelectItem == position, position)
 
             holder.itemView.setOnClickListener {
+                Log.e("인덱스체크", "커렌트 인덱스 $currentSelectItem // 바인드 인덱스 $position")
                 // 이미 선택된 아이템을 누른다면
-                if (currentSelectItem == position) {
+                if (currentSelectItem == adapterPosition) {
                     if (position == 0 || position == 1) {
                         Toast.makeText(context, "해당 페이지는 삭제할 수 없습니다.", Toast.LENGTH_SHORT).show()
                         return@setOnClickListener
                     }
-
                     if (list.size == 13) {
                         Toast.makeText(context, "더 이상 페이지를 삭제할 수 없습니다.", Toast.LENGTH_SHORT).show()
                         return@setOnClickListener
@@ -79,7 +81,6 @@ class AlbumEditContentRecyclerViewAdapter(var album: RealmAlbum, var listener: I
                                         deleteItem.deleteFromRealm()
                                     }
                                     listener.removePageViewPagerPage(position)
-
                                     if (catchPosition == currentSelectItem && currentSelectItem > 0) {
                                         currentSelectItem--
                                         listener.syncViewPagerPosition(currentSelectItem)
@@ -96,8 +97,6 @@ class AlbumEditContentRecyclerViewAdapter(var album: RealmAlbum, var listener: I
                     selectItem(position)
                     listener.syncViewPagerPosition(position)
                 }
-
-
                 //뷰페이지 페이지 이동
             }
         } else if (holder is AlbumNumberLastListViewHolder) {
@@ -146,12 +145,18 @@ class AlbumEditContentRecyclerViewAdapter(var album: RealmAlbum, var listener: I
     }
 
     override fun onItemMove(fromPosition: Int, toPosition: Int): Boolean {
-
+        //옮기는 아이템이 선택된 아이템이라면 선택된 번호 재지정
 
         val fromData = list[fromPosition]
         list.remove(fromData)
         list.add(toPosition, fromData)
+
+        currentSelectItem = toPosition
+        listener.syncViewPagerPosition(currentSelectItem)
+
         notifyItemMoved(fromPosition, toPosition)
+        notifyItemChanged(fromPosition,false)
+        notifyItemChanged(toPosition,false)
         sequenceReSetting()
         return true
     }
@@ -161,8 +166,6 @@ class AlbumEditContentRecyclerViewAdapter(var album: RealmAlbum, var listener: I
         fun removePageViewPagerPage(position: Int)
         fun addPageViewPagerPager(pageData: RealmAlbumPageData)
     }
-
-
 }
 
 
