@@ -27,14 +27,7 @@ class TemplateSelectAdapter : RecyclerView.Adapter<TemplateBasicViewHolder> {
         dualList = ArrayList()
 
         dualList.add(TemplateInfo(false, 2, R.drawable.type2))
-        dualList.add(TemplateInfo(false, 5, R.drawable.type5))
-
         singleList.add(TemplateInfo(true, 3, R.drawable.type3))
-        singleList.add(TemplateInfo(true, 4, R.drawable.type4))
-        singleList.add(TemplateInfo(true, 6, R.drawable.type6))
-        singleList.add(TemplateInfo(true, 7, R.drawable.type7))
-        singleList.add(TemplateInfo(true, 8, R.drawable.type8))
-        singleList.add(TemplateInfo(true, 9, R.drawable.type9))
     }
 
     fun setCurrentTab(tabPosition: Int) {
@@ -52,11 +45,11 @@ class TemplateSelectAdapter : RecyclerView.Adapter<TemplateBasicViewHolder> {
         context = parent.context
         if (viewType == SINGLE) {
             val view =
-                LayoutInflater.from(context).inflate(R.layout.recyclerview_album_single_template_item, parent, false)
+                    LayoutInflater.from(context).inflate(R.layout.recyclerview_album_single_template_item, parent, false)
             return TemplateSelectSingleViewHolder(view)
         } else {
             val view =
-                LayoutInflater.from(context).inflate(R.layout.recyclerview_album_dual_template_item, parent, false)
+                    LayoutInflater.from(context).inflate(R.layout.recyclerview_album_dual_template_item, parent, false)
             return TemplateSelectDualViewHolder(view)
         }
     }
@@ -179,7 +172,7 @@ class AlbumTemplateDualItemDecoration : RecyclerView.ItemDecoration {
 
 
 data class TemplateInfo(
-    var isSingle: Boolean,
-    var type: Int,
-    var imagePath: Int
+        var isSingle: Boolean,
+        var type: Int,
+        var imagePath: Int
 )

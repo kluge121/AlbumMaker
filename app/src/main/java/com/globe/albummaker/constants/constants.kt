@@ -9,6 +9,7 @@ const val TEMPLATE_SELECT = 523
 
 const val LEFT_PAGE = 123
 const val RIGHT_PAGE = 456
+const val DOUBLE_PAGE = 789
 
 
 val album8BasePrice = arrayOf(20315, 25415, 23715, 28815)
@@ -38,4 +39,4 @@ val innerOption1 = arrayOf("무광", "유광", "레이플랫")
 val innerOption2 = arrayOf("무광")
 
 
-val albumType = arrayOf(R.layout.fragment_template0, R.layout.fragment_template1)
+val albumType = arrayOf(R.layout.fragment_template0, R.layout.fragment_template1, R.layout.fragment_template2, R.layout.fragment_template3)

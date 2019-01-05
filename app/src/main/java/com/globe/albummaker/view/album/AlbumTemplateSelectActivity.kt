@@ -21,7 +21,7 @@ class AlbumTemplateSelectActivity : StatusTransparentActivity() {
     private var tabFlag: Boolean = true
     private val singleDeco = AlbumTemplateSingleItemDecoration(this)
     private val dualDeco = AlbumTemplateDualItemDecoration(this)
-
+    private var position: Int? = null
     lateinit var adapter: TemplateSelectAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +30,7 @@ class AlbumTemplateSelectActivity : StatusTransparentActivity() {
         initWidget()
 
         isFirstPage = intent.getBooleanExtra("isFirstPage", false)
+        position = intent.getIntExtra("position", 0)
     }
 
     private fun initWidget() {
@@ -74,6 +75,8 @@ class AlbumTemplateSelectActivity : StatusTransparentActivity() {
     fun selectTemplateAndFinish(type: Int) {
         val intent = Intent()
         intent.putExtra("type", type)
+        intent.putExtra("isSingle", tabFlag)
+        intent.putExtra("position", position)
         setResult(TEMPLATE_SELECT, intent)
         finish()
     }

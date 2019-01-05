@@ -1,5 +1,6 @@
 package com.globe.albummaker.view.album
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.LinearLayout
@@ -120,6 +121,4 @@ class AlbumEditActivity : StatusTransparentActivity() {
     private fun initStoredAlbum() {
 
     }
-
-
 }

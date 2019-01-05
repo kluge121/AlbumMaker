@@ -1,11 +1,17 @@
 package com.globe.albummaker.view.album.fragment
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.globe.albummaker.R
+import com.globe.albummaker.constants.DOUBLE_PAGE
+import com.globe.albummaker.constants.LEFT_PAGE
+import com.globe.albummaker.constants.RIGHT_PAGE
+import com.globe.albummaker.constants.TEMPLATE_SELECT
 import com.globe.albummaker.view.album.fragment.album_type.TypeFragment
 import com.globe.albummaker.data.realm.RealmAlbumPageData
 import com.globe.albummaker.extension.replaceFragment
@@ -23,7 +29,6 @@ class AlbumEditFragment : Fragment(), IAlbumEditFragment {
         super.onCreate(savedInstanceState)
         mPageInfo = arguments!!.getParcelable("info")
     }
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_edit_contents, container, false)
@@ -47,8 +52,8 @@ class AlbumEditFragment : Fragment(), IAlbumEditFragment {
     private fun initSingleSideWidget() {
         viewSingleMode()
 
-        val leftFragment = TypeFragment.newInstance(mPageInfo.frameType1)
-        val rightFragment = TypeFragment.newInstance(mPageInfo.frameType2)
+        val leftFragment = TypeFragment.newInstance(mPageInfo.frameType1, LEFT_PAGE)
+        val rightFragment = TypeFragment.newInstance(mPageInfo.frameType2, RIGHT_PAGE)
 
         replaceFragment(leftFragment, R.id.albumEditFragmentContainer1)
         replaceFragment(rightFragment, R.id.albumEditFragmentContainer2)
@@ -57,7 +62,7 @@ class AlbumEditFragment : Fragment(), IAlbumEditFragment {
 
     private fun initDoubleSideWidget() {
         viewDoubleMode()
-        val doubleSideFragment = TypeFragment.newInstance(mPageInfo.frameType3)
+        val doubleSideFragment = TypeFragment.newInstance(mPageInfo.frameType3, DOUBLE_PAGE)
         replaceFragment(doubleSideFragment, R.id.albumEditFragmentContainer3)
     }
 
@@ -90,5 +95,30 @@ class AlbumEditFragment : Fragment(), IAlbumEditFragment {
 
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        Log.e("체크", "체크체크체크")
+        val returnType = data!!.getIntExtra("type", -1)
+        val isSingle = data.getBooleanExtra("isSingle", true)
+        val position = data.getIntExtra("position", 0)
 
+        mPageInfo.isSingle = isSingle
+        val fragment = TypeFragment.newInstance(returnType, position)
+
+        if (isSingle) {
+            viewSingleMode()
+            if (position == LEFT_PAGE) {
+                mPageInfo.frameType1 = returnType
+                replaceFragment(fragment, R.id.albumEditFragmentContainer1)
+
+            } else if (position == RIGHT_PAGE) {
+                mPageInfo.frameType2 = returnType
+                replaceFragment(fragment, R.id.albumEditFragmentContainer2)
+            }
+        } else {
+            viewDoubleMode()
+            mPageInfo.frameType3 = DOUBLE_PAGE
+            replaceFragment(fragment, R.id.albumEditFragmentContainer3)
+        }
+    }
 }
