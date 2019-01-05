@@ -15,7 +15,6 @@ import com.globe.albummaker.util.GlideApp
 import com.globe.albummaker.view.album.AlbumTemplateSelectActivity
 import com.globe.albummaker.view.album.fragment.AlbumEditFragment
 import java.io.File
-import java.io.Serializable
 
 
 class TypeFragment : TypeBaseFragment(), View.OnClickListener {

@@ -112,7 +112,6 @@ class AlbumEditFragment : Fragment(), IAlbumEditFragment {
                     mPageInfo.framePhotoList1 = RealmList()
                     for (i in 0..fragment.imageViewCount)
                         mPageInfo.framePhotoList1[i] = ""
-
                 }
                 realm.close()
 
