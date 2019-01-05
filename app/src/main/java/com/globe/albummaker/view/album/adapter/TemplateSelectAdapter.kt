@@ -49,6 +49,7 @@ class TemplateSelectAdapter : RecyclerView.Adapter<TemplateBasicViewHolder> {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TemplateBasicViewHolder {
+        context = parent.context
         if (viewType == SINGLE) {
             val view =
                 LayoutInflater.from(context).inflate(R.layout.recyclerview_album_single_template_item, parent, false)
