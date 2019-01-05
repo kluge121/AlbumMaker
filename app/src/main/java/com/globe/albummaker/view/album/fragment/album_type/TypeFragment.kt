@@ -6,13 +6,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.ImageView
 import com.globe.albummaker.R
 import com.globe.albummaker.constants.TEMPLATE_SELECT
 import com.globe.albummaker.constants.albumType
 import com.globe.albummaker.util.GlideApp
 import com.globe.albummaker.view.album.AlbumTemplateSelectActivity
+import com.globe.albummaker.view.album.fragment.AlbumEditFragment
 import java.io.File
+import java.io.Serializable
 
 
 class TypeFragment : TypeBaseFragment(), View.OnClickListener {
@@ -20,8 +23,7 @@ class TypeFragment : TypeBaseFragment(), View.OnClickListener {
     private lateinit var mView: View
     private var mType = -1
     private var mPosition = 0;
-    lateinit var photoList: Array<String>
-    private var imageViewCount = 0
+    var imageViewCount = 0;
 
     companion object {
         fun newInstance(type: Int, position: Int): TypeFragment {
@@ -34,10 +36,12 @@ class TypeFragment : TypeBaseFragment(), View.OnClickListener {
         }
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mType = arguments!!.getInt("typeInfo")
         mPosition = arguments!!.getInt("position")
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -54,17 +58,30 @@ class TypeFragment : TypeBaseFragment(), View.OnClickListener {
     private fun findAllImageViewAndInitArray() {
         val viewGroup = mView as ViewGroup
         val childCount = viewGroup.childCount
-        imageViewCount = childCount
+        var imageCount = 0;
         for (i in 0..childCount) {
-            val view = viewGroup.getChildAt(0)
-            view.setOnClickListener(this)
-        }
+            val view = viewGroup.getChildAt(i)
+            if (view is ImageView) {
+                view.setOnClickListener(this)
+                view.setTag(R.id.imageViewTag, imageCount++)
+            }
+            if (view is FrameLayout) {
+                view.setOnClickListener(this)
+            }
+//            try {
+//
+//            }catch (e : Exception){
+//                Log.e("리스너체크","$i 번째에서 에러빡")
+//            }
 
-        photoList = Array(childCount) { "" }
+        }
+        imageViewCount = imageCount
+
     }
 
 
     override fun onClick(view: View?) {
+
         if (view!!.id == R.id.albumEditFragmentContainer_0) {
             val intent = Intent(context, AlbumTemplateSelectActivity::class.java)
             with(intent) {
@@ -77,22 +94,13 @@ class TypeFragment : TypeBaseFragment(), View.OnClickListener {
         }
 
         if (view is ImageView) {
+            Log.e("리스너체크", "리스너체크")
             imageCallback = object : IimageSetCallback {
                 override fun setImage(uri: String) {
-                    val parentView = getView() as ViewGroup
-                    val childCount = parentView.childCount
-                    for (i in 0..childCount) {
-                        if (view.id == parentView.getChildAt(i).id) {
-                            GlideApp.with(context!!)
-                                    .load(File(uri))
-                                    .into(view)
-
-                            //어댑터에서 타입, 뷰 싱크 액티비티 계층에
-                            //프리뷰 업데이트
-
-
-                        }
-                    }
+                    GlideApp.with(context!!)
+                            .load(File(uri))
+                            .into(view)
+                    (parentFragment as AlbumEditFragment).imagePathSave(mPosition, view.getTag(R.id.imageViewTag) as Int, uri)
                 }
             }
             selectGallery()

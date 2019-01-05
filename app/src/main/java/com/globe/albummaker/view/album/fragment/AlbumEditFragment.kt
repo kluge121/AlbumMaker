@@ -2,7 +2,6 @@ package com.globe.albummaker.view.album.fragment
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,16 +10,15 @@ import com.globe.albummaker.R
 import com.globe.albummaker.constants.DOUBLE_PAGE
 import com.globe.albummaker.constants.LEFT_PAGE
 import com.globe.albummaker.constants.RIGHT_PAGE
-import com.globe.albummaker.constants.TEMPLATE_SELECT
-import com.globe.albummaker.view.album.fragment.album_type.TypeFragment
 import com.globe.albummaker.data.realm.RealmAlbumPageData
 import com.globe.albummaker.extension.replaceFragment
+import com.globe.albummaker.view.album.fragment.album_type.TypeFragment
+import io.realm.Realm
+import io.realm.RealmList
 import kotlinx.android.synthetic.main.fragment_edit_contents.*
 
 
 class AlbumEditFragment : Fragment(), IAlbumEditFragment {
-
-
     //앨범페이지 공간만 제공
 
     lateinit var mPageInfo: RealmAlbumPageData
@@ -97,7 +95,6 @@ class AlbumEditFragment : Fragment(), IAlbumEditFragment {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        Log.e("체크", "체크체크체크")
         val returnType = data!!.getIntExtra("type", -1)
         val isSingle = data.getBooleanExtra("isSingle", true)
         val position = data.getIntExtra("position", 0)
@@ -110,15 +107,44 @@ class AlbumEditFragment : Fragment(), IAlbumEditFragment {
             if (position == LEFT_PAGE) {
                 mPageInfo.frameType1 = returnType
                 replaceFragment(fragment, R.id.albumEditFragmentContainer1)
+                val realm = Realm.getDefaultInstance()
+                realm.executeTransaction {
+                    mPageInfo.framePhotoList1 = RealmList()
+                    for (i in 0..fragment.imageViewCount)
+                        mPageInfo.framePhotoList1[i] = ""
+
+                }
+                realm.close()
 
             } else if (position == RIGHT_PAGE) {
                 mPageInfo.frameType2 = returnType
                 replaceFragment(fragment, R.id.albumEditFragmentContainer2)
+                val realm = Realm.getDefaultInstance()
+                realm.executeTransaction {
+                    mPageInfo.framePhotoList2 = RealmList()
+                    for (i in 0..fragment.imageViewCount)
+                        mPageInfo.framePhotoList1[i] = ""
+
+                }
+                realm.close()
             }
         } else {
             viewDoubleMode()
             mPageInfo.frameType3 = DOUBLE_PAGE
             replaceFragment(fragment, R.id.albumEditFragmentContainer3)
+            val realm = Realm.getDefaultInstance()
+            realm.executeTransaction {
+                mPageInfo.framePhotoList1 = RealmList()
+                for (i in 0..fragment.imageViewCount)
+                    mPageInfo.framePhotoList1[i] = ""
+
+            }
+            realm.close()
         }
+    }
+
+    fun imagePathSave(pagePosition: Int, arrayPosition: Int, path: String) {
+        if (pagePosition == LEFT_PAGE || pagePosition == DOUBLE_PAGE)
+            mPageInfo.framePhotoList1[arrayPosition] = path
     }
 }

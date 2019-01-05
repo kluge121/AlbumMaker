@@ -55,7 +55,6 @@ class AlbumEditContentRecyclerViewAdapter(var album: RealmAlbum, var listener: I
             holder.setView(context, list[position]!!, currentSelectItem == position, position)
 
             holder.itemView.setOnClickListener {
-                Log.e("인덱스체크", "커렌트 인덱스 $currentSelectItem // 바인드 인덱스 $position")
                 // 이미 선택된 아이템을 누른다면
                 if (currentSelectItem == adapterPosition) {
                     if (position == 0 || position == 1) {
@@ -155,8 +154,8 @@ class AlbumEditContentRecyclerViewAdapter(var album: RealmAlbum, var listener: I
         listener.syncViewPagerPosition(currentSelectItem)
 
         notifyItemMoved(fromPosition, toPosition)
-        notifyItemChanged(fromPosition,false)
-        notifyItemChanged(toPosition,false)
+        notifyItemChanged(fromPosition, false)
+        notifyItemChanged(toPosition, false)
         sequenceReSetting()
         return true
     }
