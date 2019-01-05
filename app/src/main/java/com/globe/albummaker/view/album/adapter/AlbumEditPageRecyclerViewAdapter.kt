@@ -1,20 +1,23 @@
 package com.globe.albummaker.view.album.adapter
 
+import android.app.AlertDialog
 import android.content.Context
 import android.graphics.Rect
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.DimenRes
 import androidx.recyclerview.widget.RecyclerView
 import com.globe.albummaker.R
 import com.globe.albummaker.data.realm.RealmAlbum
 import com.globe.albummaker.data.realm.RealmAlbumPageData
 import com.globe.albummaker.util.GlideApp
+import io.realm.Realm
 import kotlinx.android.synthetic.main.recyclerview_album_nomal_list_item.view.*
 
 class AlbumEditContentRecyclerViewAdapter(var album: RealmAlbum, var listener: IAlbumEditContentRecyclerListener) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+        RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     lateinit var context: Context
     private val NOAML_ITEM = 1
@@ -28,11 +31,11 @@ class AlbumEditContentRecyclerViewAdapter(var album: RealmAlbum, var listener: I
         context = parent.context
         return if (viewType == NOAML_ITEM) {
             view = LayoutInflater.from(context)
-                .inflate(R.layout.recyclerview_album_nomal_list_item, parent, false)
+                    .inflate(R.layout.recyclerview_album_nomal_list_item, parent, false)
             AlbumNumberNomalListViewHolder(view)
         } else {
             view = LayoutInflater.from(context)
-                .inflate(R.layout.recyclerview_album_last_list_item, parent, false)
+                    .inflate(R.layout.recyclerview_album_last_list_item, parent, false)
             AlbumNumberLastListViewHolder(view)
         }
     }
@@ -47,8 +50,48 @@ class AlbumEditContentRecyclerViewAdapter(var album: RealmAlbum, var listener: I
             holder.setView(context, list[position]!!, currentSelectItem == position, position)
 
             holder.itemView.setOnClickListener {
-                selectItem(position)
-                listener.syncViewPagerPosition(position)
+                // 이미 선택된 아이템을 누른다면
+                if (currentSelectItem == position) {
+                    if (position == 0 || position == 1) {
+                        Toast.makeText(context, "해당 페이지는 삭제할 수 없습니다.", Toast.LENGTH_SHORT).show()
+                        return@setOnClickListener
+                    }
+
+                    if (list.size == 13) {
+                        Toast.makeText(context, "더 이상 페이지를 삭제할 수 없습니다.", Toast.LENGTH_SHORT).show()
+                        return@setOnClickListener
+                    }
+                    AlertDialog.Builder(context)
+                            .setTitle("페이지를 삭제하시겠습니까?")
+                            .setNegativeButton("취소") { dialog, i ->
+                                dialog.dismiss()
+                            }
+                            .setPositiveButton("확인") { dialog, i ->
+                                val realm = Realm.getDefaultInstance()
+                                realm.executeTransaction {
+                                    val catchPosition = position
+                                    val deleteItem = list[position]
+                                    list.remove(deleteItem)
+                                    if (deleteItem!!.isManaged) {
+                                        deleteItem.deleteFromRealm()
+                                        listener.pageRemoveViewPagerPage(position)
+                                    }
+
+                                    if (catchPosition == currentSelectItem && currentSelectItem > 0) {
+                                        currentSelectItem--
+                                        listener.syncViewPagerPosition(currentSelectItem)
+                                    }
+
+                                    notifyDataSetChanged()
+                                    realm.close()
+
+                                }
+
+                            }.show()
+                } else {
+                    selectItem(position)
+                    listener.syncViewPagerPosition(position)
+                }
 
 
                 //뷰페이지 페이지 이동
@@ -79,6 +122,7 @@ class AlbumEditContentRecyclerViewAdapter(var album: RealmAlbum, var listener: I
 
     interface IAlbumEditContentRecyclerListener {
         fun syncViewPagerPosition(position: Int)
+        fun pageRemoveViewPagerPage(position: Int)
     }
 
 
@@ -98,12 +142,12 @@ class AlbumNumberNomalListViewHolder(view: View) : RecyclerView.ViewHolder(view)
             else
                 drawable = R.drawable.first_preview
             GlideApp.with(preview)
-                .load(drawable)
-                .into(preview)
+                    .load(drawable)
+                    .into(preview)
         } else {
             GlideApp.with(preview)
-                .load(context.getFileStreamPath(data.pagePreviewPath))
-                .into(preview)
+                    .load(context.getFileStreamPath(data.pagePreviewPath))
+                    .into(preview)
 
         }
 
@@ -148,16 +192,16 @@ class AlbumNumberItemDecoration : RecyclerView.ItemDecoration {
     }
 
     override fun getItemOffsets(
-        outRect: Rect,
-        view: View,
-        parent: RecyclerView,
-        state: RecyclerView.State
+            outRect: Rect,
+            view: View,
+            parent: RecyclerView,
+            state: RecyclerView.State
     ) {
         val position = parent.getChildAdapterPosition(view)
         val itemCount = state.itemCount
 
         val sideSpaceOffset =
-            context!!.resources.getDimensionPixelOffset(R.dimen.album_side_number_space)
+                context!!.resources.getDimensionPixelOffset(R.dimen.album_side_number_space)
         val spaceOffset = context!!.resources.getDimensionPixelOffset(R.dimen.album_number_space)
         // first
         if (position == 0) {

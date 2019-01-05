@@ -25,18 +25,15 @@ import java.text.DecimalFormat
 
 class AlbumMainActivity : StatusTransparentActivity(), AlbumMainRecyclerViewAdapter.IMainActivityListener {
 
-
     var snackBar: CustomSnackbar? = null
     lateinit var adapter: AlbumMainRecyclerViewAdapter
     lateinit var albumRealmList: RealmList<RealmAlbum>
     var marginFlag = false
 
-
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onCreate(savedInstanceState, persistentState)
         setContentView(R.layout.activity_album_main)
         setStatusTransparent()
-
     }
 
     private fun newAlbumCreate() {
@@ -50,7 +47,6 @@ class AlbumMainActivity : StatusTransparentActivity(), AlbumMainRecyclerViewAdap
             override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
                 Toast.makeText(this@AlbumMainActivity, "사진 등록을 위한 저장 권한을 허용해주세요.", Toast.LENGTH_SHORT).show()
             }
-
         }
 
         TedPermission.with(this@AlbumMainActivity)
@@ -76,7 +72,6 @@ class AlbumMainActivity : StatusTransparentActivity(), AlbumMainRecyclerViewAdap
         }
 
     }
-
 
     override fun nonItemUpdateView(isNonItem: Boolean) {
         if (isNonItem) {

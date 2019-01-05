@@ -15,6 +15,9 @@ class AlbumEditViewPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter
     fun addFragmentPage(pageFragment: AlbumEditFragment) {
             list.add(pageFragment)
     }
+    fun removeFragmentPage(position : Int){
+        list.removeAt(position)
+    }
 
     override fun getItem(position: Int): Fragment {
         return list[position]

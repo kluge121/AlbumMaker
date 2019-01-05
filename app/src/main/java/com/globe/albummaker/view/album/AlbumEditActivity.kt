@@ -30,7 +30,6 @@ class AlbumEditActivity : StatusTransparentActivity() {
     lateinit var viewPagerAdapter: AlbumEditViewPagerAdapter
     lateinit var recyclerViewAdapter: AlbumEditContentRecyclerViewAdapter
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_album_edit)
@@ -79,17 +78,18 @@ class AlbumEditActivity : StatusTransparentActivity() {
                 mAlbum!!.pageDatas.add(pageData)
                 break
             }
-
-
             mAlbum!!.pageDatas.add(pageData)
             viewPagerAdapter.addFragmentPage(AlbumEditFragment.newInstance(pageData))
         }
         recyclerViewAdapter = AlbumEditContentRecyclerViewAdapter(mAlbum!!,
             object : AlbumEditContentRecyclerViewAdapter.IAlbumEditContentRecyclerListener {
+                override fun pageRemoveViewPagerPage(position: Int) {
+                   viewPagerAdapter.removeFragmentPage(position)
+                }
+
                 override fun syncViewPagerPosition(position: Int) {
                     album_edit_viewpager.currentItem = position
                 }
-
             }
         )
         album_edit_viewpager.adapter = viewPagerAdapter
