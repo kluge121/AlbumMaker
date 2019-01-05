@@ -1,5 +1,6 @@
 package com.globe.albummaker.view.album.adapter
 
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
@@ -13,11 +14,16 @@ class AlbumEditViewPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter
 
 
     fun addFragmentPage(pageFragment: AlbumEditFragment) {
-            list.add(pageFragment)
+        list.add(pageFragment)
+        notifyDataSetChanged()
     }
-    fun removeFragmentPage(position : Int){
-        list.removeAt(position)
+
+    fun removeFragmentPage(position: Int) {
+        list.remove(list[position])
+        notifyDataSetChanged()
+
     }
+
 
     override fun getItem(position: Int): Fragment {
         return list[position]
@@ -26,7 +32,6 @@ class AlbumEditViewPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter
     override fun getCount(): Int {
         return list.size
     }
-
 
 
 }

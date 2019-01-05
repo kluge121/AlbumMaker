@@ -12,12 +12,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.globe.albummaker.R
 import com.globe.albummaker.data.realm.RealmAlbum
 import com.globe.albummaker.data.realm.RealmAlbumPageData
+import com.globe.albummaker.extension.getAlbumPageNextKey
 import com.globe.albummaker.util.GlideApp
 import io.realm.Realm
 import kotlinx.android.synthetic.main.recyclerview_album_nomal_list_item.view.*
+import java.util.*
 
 class AlbumEditContentRecyclerViewAdapter(var album: RealmAlbum, var listener: IAlbumEditContentRecyclerListener) :
-        RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+        RecyclerView.Adapter<RecyclerView.ViewHolder>(), ItemTouchHelperCallback.ItemTouchHelperListener {
+
 
     lateinit var context: Context
     private val NOAML_ITEM = 1
@@ -74,13 +77,14 @@ class AlbumEditContentRecyclerViewAdapter(var album: RealmAlbum, var listener: I
                                     list.remove(deleteItem)
                                     if (deleteItem!!.isManaged) {
                                         deleteItem.deleteFromRealm()
-                                        listener.pageRemoveViewPagerPage(position)
                                     }
+                                    listener.removePageViewPagerPage(position)
 
                                     if (catchPosition == currentSelectItem && currentSelectItem > 0) {
                                         currentSelectItem--
                                         listener.syncViewPagerPosition(currentSelectItem)
                                     }
+                                    sequenceReSetting()
 
                                     notifyDataSetChanged()
                                     realm.close()
@@ -95,6 +99,18 @@ class AlbumEditContentRecyclerViewAdapter(var album: RealmAlbum, var listener: I
 
 
                 //뷰페이지 페이지 이동
+            }
+        } else if (holder is AlbumNumberLastListViewHolder) {
+            holder.itemView.setOnClickListener {
+                val realm = Realm.getDefaultInstance()
+                realm.executeTransaction {
+                    val newPage = RealmAlbumPageData()
+                    newPage.id = getAlbumPageNextKey(realm)
+                    newPage.sequence = list.size - 1
+                    list.add(list.size - 1, newPage)
+                    listener.addPageViewPagerPager(newPage)
+                    notifyDataSetChanged()
+                }
             }
         }
     }
@@ -119,10 +135,31 @@ class AlbumEditContentRecyclerViewAdapter(var album: RealmAlbum, var listener: I
         notifyItemChanged(currentSelectItem)
     }
 
+    private fun sequenceReSetting() {
+        val realm = Realm.getDefaultInstance()
+        realm.executeTransaction {
+            var sequence = 0;
+            for (page in list) {
+                page.sequence = sequence++
+            }
+        }
+    }
+
+    override fun onItemMove(fromPosition: Int, toPosition: Int): Boolean {
+
+
+        val fromData = list[fromPosition]
+        list.remove(fromData)
+        list.add(toPosition, fromData)
+        notifyItemMoved(fromPosition, toPosition)
+        sequenceReSetting()
+        return true
+    }
 
     interface IAlbumEditContentRecyclerListener {
         fun syncViewPagerPosition(position: Int)
-        fun pageRemoveViewPagerPage(position: Int)
+        fun removePageViewPagerPage(position: Int)
+        fun addPageViewPagerPager(pageData: RealmAlbumPageData)
     }
 
 
@@ -173,6 +210,12 @@ class AlbumNumberNomalListViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
 
     }
+
+    fun reSettingPageNumber() {
+        itemView.recyclerview_number_list_left_tv.text = ((adapterPosition - 1) * 2).toString()
+        itemView.recyclerview_number_list_right_tv.text = ((adapterPosition - 1) * 2 + 1).toString()
+    }
+
 }
 
 class AlbumNumberLastListViewHolder(view: View) : RecyclerView.ViewHolder(view)

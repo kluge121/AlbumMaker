@@ -17,7 +17,7 @@ open class RealmAlbumPageData() : RealmObject(), Parcelable {
     open var framePhotoList1: RealmList<String> = RealmList()
     open var framePhotoList2: RealmList<String> = RealmList()
     open var isSingle: Boolean = true
-    open var sequence: Int = 0
+    open var sequence: Int = -1
 
     constructor(parcel: Parcel) : this() {
         id = parcel.readInt()

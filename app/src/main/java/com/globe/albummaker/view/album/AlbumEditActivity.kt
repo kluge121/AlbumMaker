@@ -3,6 +3,7 @@ package com.globe.albummaker.view.album
 import android.os.Bundle
 import android.util.Log
 import android.widget.LinearLayout
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.SimpleItemAnimator
 import androidx.viewpager.widget.PagerAdapter
@@ -19,6 +20,7 @@ import com.globe.albummaker.extension.getAlbumNextKey
 import com.globe.albummaker.extension.getAlbumPageNextKey
 import com.globe.albummaker.view.album.adapter.AlbumEditContentRecyclerViewAdapter
 import com.globe.albummaker.view.album.adapter.AlbumNumberItemDecoration
+import com.globe.albummaker.view.album.adapter.ItemTouchHelperCallback
 import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_album_edit.*
 
@@ -35,7 +37,6 @@ class AlbumEditActivity : StatusTransparentActivity() {
         setContentView(R.layout.activity_album_edit)
         setStatusTransparent()
         viewPagerAdapter = AlbumEditViewPagerAdapter(supportFragmentManager)
-
         initWidget(NEW_ALBUM)
     }
 
@@ -51,11 +52,16 @@ class AlbumEditActivity : StatusTransparentActivity() {
 
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
             }
+
             override fun onPageSelected(position: Int) {
                 albumEditRecyclerview.scrollToPosition(position)
-                recyclerViewAdapter.selectItem(position);
+                recyclerViewAdapter.selectItem(position)
+                editTestTextView.text = "$position"
             }
         })
+        val callback = ItemTouchHelperCallback(recyclerViewAdapter)
+        val touchHelper = ItemTouchHelper(callback)
+        touchHelper.attachToRecyclerView(albumEditRecyclerview)
     }
 
     private fun initNewAlbum() {
@@ -82,15 +88,19 @@ class AlbumEditActivity : StatusTransparentActivity() {
             viewPagerAdapter.addFragmentPage(AlbumEditFragment.newInstance(pageData))
         }
         recyclerViewAdapter = AlbumEditContentRecyclerViewAdapter(mAlbum!!,
-            object : AlbumEditContentRecyclerViewAdapter.IAlbumEditContentRecyclerListener {
-                override fun pageRemoveViewPagerPage(position: Int) {
-                   viewPagerAdapter.removeFragmentPage(position)
-                }
+                object : AlbumEditContentRecyclerViewAdapter.IAlbumEditContentRecyclerListener {
+                    override fun addPageViewPagerPager(pageData: RealmAlbumPageData) {
+                        viewPagerAdapter.addFragmentPage(AlbumEditFragment.newInstance(pageData))
+                    }
 
-                override fun syncViewPagerPosition(position: Int) {
-                    album_edit_viewpager.currentItem = position
+                    override fun removePageViewPagerPage(position: Int) {
+                        viewPagerAdapter.removeFragmentPage(position)
+                    }
+
+                    override fun syncViewPagerPosition(position: Int) {
+                        album_edit_viewpager.currentItem = position
+                    }
                 }
-            }
         )
         album_edit_viewpager.adapter = viewPagerAdapter
         viewPagerAdapter.notifyDataSetChanged()
@@ -98,10 +108,10 @@ class AlbumEditActivity : StatusTransparentActivity() {
         albumEditRecyclerview.adapter = recyclerViewAdapter
         albumEditRecyclerview.layoutManager = LinearLayoutManager(this, LinearLayout.HORIZONTAL, false)
         albumEditRecyclerview.addItemDecoration(
-            AlbumNumberItemDecoration(
-                this,
-                R.dimen.album_side_number_space
-            )
+                AlbumNumberItemDecoration(
+                        this,
+                        R.dimen.album_side_number_space
+                )
         )
         (albumEditRecyclerview.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
         realm.close()
