@@ -1,5 +1,6 @@
 package com.globe.albummaker.view.album.fragment.album_type
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -22,6 +23,7 @@ class TypeFragment : TypeBaseFragment(), View.OnClickListener {
     private lateinit var mView: View
     private var mType = -1
     private var mPosition = 0;
+    private lateinit var mListener: IImageSettingListener
     var imageViewCount = 0;
 
     companion object {
@@ -35,6 +37,13 @@ class TypeFragment : TypeBaseFragment(), View.OnClickListener {
         }
     }
 
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        if (context is IImageSettingListener) {
+            mListener = context as IImageSettingListener
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,12 +76,6 @@ class TypeFragment : TypeBaseFragment(), View.OnClickListener {
             if (view is FrameLayout) {
                 view.setOnClickListener(this)
             }
-//            try {
-//
-//            }catch (e : Exception){
-//                Log.e("리스너체크","$i 번째에서 에러빡")
-//            }
-
         }
         imageViewCount = imageCount
 
@@ -84,7 +87,6 @@ class TypeFragment : TypeBaseFragment(), View.OnClickListener {
         if (view!!.id == R.id.albumEditFragmentContainer_0) {
             val intent = Intent(context, AlbumTemplateSelectActivity::class.java)
             with(intent) {
-
                 //첫번째 페이지에서 양면페이지 리스트를 안 보여주기 위해서 넘겨줌
                 putExtra("isFirstPage", (mType == 1))
                 putExtra("position", mPosition)
@@ -93,18 +95,25 @@ class TypeFragment : TypeBaseFragment(), View.OnClickListener {
         }
 
         if (view is ImageView) {
-            Log.e("리스너체크", "리스너체크")
             imageCallback = object : IimageSetCallback {
                 override fun setImage(uri: String) {
                     GlideApp.with(context!!)
-                            .load(File(uri))
-                            .into(view)
-                    (parentFragment as AlbumEditFragment).imagePathSave(mPosition, view.getTag(R.id.imageViewTag) as Int, uri)
+                        .load(File(uri))
+                        .into(view)
+                    (parentFragment as AlbumEditFragment).imagePathSave(
+                        mPosition,
+                        view.getTag(R.id.imageViewTag) as Int,
+                        uri
+                    )
                 }
             }
             selectGallery()
         }
     }
 
+
+    interface IImageSettingListener {
+        fun imagePathSave(pagePosition: Int, arrayPosition: Int, path: String)
+    }
 
 }

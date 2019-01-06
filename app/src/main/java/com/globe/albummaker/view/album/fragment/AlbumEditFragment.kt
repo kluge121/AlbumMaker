@@ -18,7 +18,7 @@ import io.realm.RealmList
 import kotlinx.android.synthetic.main.fragment_edit_contents.*
 
 
-class AlbumEditFragment : Fragment(), IAlbumEditFragment {
+class AlbumEditFragment : Fragment(), IAlbumEditFragment, TypeFragment.IImageSettingListener {
     //앨범페이지 공간만 제공
 
     lateinit var mPageInfo: RealmAlbumPageData
@@ -142,8 +142,10 @@ class AlbumEditFragment : Fragment(), IAlbumEditFragment {
         }
     }
 
-    fun imagePathSave(pagePosition: Int, arrayPosition: Int, path: String) {
+    override fun imagePathSave(pagePosition: Int, arrayPosition: Int, path: String) {
         if (pagePosition == LEFT_PAGE || pagePosition == DOUBLE_PAGE)
             mPageInfo.framePhotoList1[arrayPosition] = path
+        else if (pagePosition == RIGHT_PAGE)
+            mPageInfo.framePhotoList2[arrayPosition] = path
     }
 }
