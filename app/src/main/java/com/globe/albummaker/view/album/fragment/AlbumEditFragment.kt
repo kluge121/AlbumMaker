@@ -109,7 +109,6 @@ class AlbumEditFragment : Fragment(), IAlbumEditFragment, TypeFragment.IImageSet
                 replaceFragment(fragment, R.id.albumEditFragmentContainer1)
                 val realm = Realm.getDefaultInstance()
                 realm.executeTransaction {
-                    mPageInfo.framePhotoList1 = RealmList()
                     for (i in 0..fragment.imageViewCount)
                         mPageInfo.framePhotoList1[i] = ""
                 }
@@ -120,7 +119,6 @@ class AlbumEditFragment : Fragment(), IAlbumEditFragment, TypeFragment.IImageSet
                 replaceFragment(fragment, R.id.albumEditFragmentContainer2)
                 val realm = Realm.getDefaultInstance()
                 realm.executeTransaction {
-                    mPageInfo.framePhotoList2 = RealmList()
                     for (i in 0..fragment.imageViewCount)
                         mPageInfo.framePhotoList1[i] = ""
 
@@ -133,7 +131,6 @@ class AlbumEditFragment : Fragment(), IAlbumEditFragment, TypeFragment.IImageSet
             replaceFragment(fragment, R.id.albumEditFragmentContainer3)
             val realm = Realm.getDefaultInstance()
             realm.executeTransaction {
-                mPageInfo.framePhotoList1 = RealmList()
                 for (i in 0..fragment.imageViewCount)
                     mPageInfo.framePhotoList1[i] = ""
 

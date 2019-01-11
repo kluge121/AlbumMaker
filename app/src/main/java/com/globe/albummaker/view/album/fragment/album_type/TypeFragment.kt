@@ -3,7 +3,6 @@ package com.globe.albummaker.view.album.fragment.album_type
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +12,7 @@ import com.globe.albummaker.R
 import com.globe.albummaker.constants.TEMPLATE_SELECT
 import com.globe.albummaker.constants.albumType
 import com.globe.albummaker.util.GlideApp
+import com.globe.albummaker.view.album.AlbumEditActivity
 import com.globe.albummaker.view.album.AlbumTemplateSelectActivity
 import com.globe.albummaker.view.album.fragment.AlbumEditFragment
 import java.io.File
@@ -40,8 +40,9 @@ class TypeFragment : TypeBaseFragment(), View.OnClickListener {
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
-        if (context is IImageSettingListener) {
-            mListener = context as IImageSettingListener
+        if (context is AlbumEditActivity) {
+            mListener =
+                    context.supportFragmentManager.findFragmentById(R.id.album_edit_viewpager) as IImageSettingListener
         }
     }
 

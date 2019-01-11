@@ -23,6 +23,7 @@ import com.globe.albummaker.view.album.adapter.AlbumEditContentRecyclerViewAdapt
 import com.globe.albummaker.view.album.adapter.AlbumNumberItemDecoration
 import com.globe.albummaker.view.album.adapter.ItemTouchHelperCallback
 import io.realm.Realm
+import io.realm.RealmList
 import kotlinx.android.synthetic.main.activity_album_edit.*
 
 class AlbumEditActivity : StatusTransparentActivity() {
@@ -60,6 +61,7 @@ class AlbumEditActivity : StatusTransparentActivity() {
                 editTestTextView.text = "$position"
             }
         })
+        album_edit_viewpager.offscreenPageLimit = 30
         val callback = ItemTouchHelperCallback(recyclerViewAdapter)
         val touchHelper = ItemTouchHelper(callback)
         touchHelper.attachToRecyclerView(albumEditRecyclerview)
@@ -77,6 +79,15 @@ class AlbumEditActivity : StatusTransparentActivity() {
             val pageData = RealmAlbumPageData()
             pageData.id = pageId++
             pageData.sequence = sequence++
+
+            pageData.framePhotoList1 = RealmList();
+            pageData.framePhotoList2 = RealmList();
+
+            for (i in 0..9) {
+                pageData.framePhotoList1.add(" ")
+                pageData.framePhotoList2.add(" ")
+            }
+
             if (i == 1)
                 pageData.frameType1 = 1
 
@@ -89,19 +100,19 @@ class AlbumEditActivity : StatusTransparentActivity() {
             viewPagerAdapter.addFragmentPage(AlbumEditFragment.newInstance(pageData))
         }
         recyclerViewAdapter = AlbumEditContentRecyclerViewAdapter(mAlbum!!,
-                object : AlbumEditContentRecyclerViewAdapter.IAlbumEditContentRecyclerListener {
-                    override fun addPageViewPagerPager(pageData: RealmAlbumPageData) {
-                        viewPagerAdapter.addFragmentPage(AlbumEditFragment.newInstance(pageData))
-                    }
-
-                    override fun removePageViewPagerPage(position: Int) {
-                        viewPagerAdapter.removeFragmentPage(position)
-                    }
-
-                    override fun syncViewPagerPosition(position: Int) {
-                        album_edit_viewpager.currentItem = position
-                    }
+            object : AlbumEditContentRecyclerViewAdapter.IAlbumEditContentRecyclerListener {
+                override fun addPageViewPagerPager(pageData: RealmAlbumPageData) {
+                    viewPagerAdapter.addFragmentPage(AlbumEditFragment.newInstance(pageData))
                 }
+
+                override fun removePageViewPagerPage(position: Int) {
+                    viewPagerAdapter.removeFragmentPage(position)
+                }
+
+                override fun syncViewPagerPosition(position: Int) {
+                    album_edit_viewpager.currentItem = position
+                }
+            }
         )
         album_edit_viewpager.adapter = viewPagerAdapter
         viewPagerAdapter.notifyDataSetChanged()
@@ -109,10 +120,10 @@ class AlbumEditActivity : StatusTransparentActivity() {
         albumEditRecyclerview.adapter = recyclerViewAdapter
         albumEditRecyclerview.layoutManager = LinearLayoutManager(this, LinearLayout.HORIZONTAL, false)
         albumEditRecyclerview.addItemDecoration(
-                AlbumNumberItemDecoration(
-                        this,
-                        R.dimen.album_side_number_space
-                )
+            AlbumNumberItemDecoration(
+                this,
+                R.dimen.album_side_number_space
+            )
         )
         (albumEditRecyclerview.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
         realm.close()
