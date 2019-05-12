@@ -115,6 +115,7 @@ class TypeFragment : TypeBaseFragment(), View.OnClickListener {
 
     interface IImageSettingListener {
         fun imagePathSave(pagePosition: Int, arrayPosition: Int, path: String)
+        fun pagePreviewUpdate()
     }
 
 }

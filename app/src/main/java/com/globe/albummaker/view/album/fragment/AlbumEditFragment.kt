@@ -2,6 +2,7 @@ package com.globe.albummaker.view.album.fragment
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,13 +13,16 @@ import com.globe.albummaker.constants.LEFT_PAGE
 import com.globe.albummaker.constants.RIGHT_PAGE
 import com.globe.albummaker.data.realm.RealmAlbumPageData
 import com.globe.albummaker.extension.replaceFragment
+import com.globe.albummaker.view.album.adapter.AlbumEditViewPagerAdapter
 import com.globe.albummaker.view.album.fragment.album_type.TypeFragment
 import io.realm.Realm
 import io.realm.RealmList
+import kotlinx.android.synthetic.main.activity_album_edit.*
 import kotlinx.android.synthetic.main.fragment_edit_contents.*
 
 
 class AlbumEditFragment : Fragment(), IAlbumEditFragment, TypeFragment.IImageSettingListener {
+
     //앨범페이지 공간만 제공
 
     lateinit var mPageInfo: RealmAlbumPageData
@@ -137,6 +141,8 @@ class AlbumEditFragment : Fragment(), IAlbumEditFragment, TypeFragment.IImageSet
             }
             realm.close()
         }
+
+        pagePreviewUpdate()
     }
 
     override fun imagePathSave(pagePosition: Int, arrayPosition: Int, path: String) {
@@ -144,5 +150,33 @@ class AlbumEditFragment : Fragment(), IAlbumEditFragment, TypeFragment.IImageSet
             mPageInfo.framePhotoList1[arrayPosition] = path
         else if (pagePosition == RIGHT_PAGE)
             mPageInfo.framePhotoList2[arrayPosition] = path
+    }
+
+    override fun pagePreviewUpdate() {
+        val adapter = 
+
+        album_edit_in_container.post {
+            albumEditFragmentContainer1.post {
+                albumEditFragmentContainer2.post {
+                    albumEditFragmentContainer3.post {
+                        val newPreview =
+                            CaptureUtil.captureView(context!!, album_edit_in_container, mPageInfo.id.toString())
+                        val realm = Realm.getDefaultInstance()
+                        realm.executeTransaction {
+                            val preFile =
+                                context!!.getFileStreamPath(mPageInfo.pagePreviewPath)
+                            if (preFile.exists() && preFile.delete()) {
+                                Log.e("삭제확인 성공", preFile.absolutePath)
+                            } else {
+                                Log.e("삭제확인 실패", preFile.absolutePath)
+                            }
+                            mPageInfo.pagePreviewPath = newPreview
+
+                            realm.close()
+                        }
+                    }
+                }
+            }
+        }
     }
 }
